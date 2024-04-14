@@ -181,7 +181,14 @@ def Q_1(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT event.player_name, avg(shot.statsbomb_xg) AS xg
+            FROM event
+            INNER JOIN shot ON event.event_id = shot.event_id
+            WHERE competition_name = 'la liga' and season_name = '2020/2021'
+            GROUP BY event.player_name
+            HAVING xg > 0
+            ORDER BY xg DESC;
+             """
 
     #==========================================================================
 
@@ -204,7 +211,13 @@ def Q_2(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT player_name, type_name
+                FROM event
+                WHERE type_name = 'shot' and (competition_name = 'la liga' and season_name = '2020/2021')
+                GROUP BY player_name, type_name
+                HAVING COUNT(type_name) > 1
+                ORDER BY player_name DESC;
+    """
 
     #==========================================================================
 
@@ -227,7 +240,13 @@ def Q_3(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT event.player_name, count(shot.first_time) AS firsts
+            FROM event
+            INNER JOIN shot ON event.event_id = shot.event_id
+            WHERE competition_name = 'la liga' and ( season_name = '2020/2021' OR season_name = '2019/2020' OR season_name = '2018/2019') 
+            GROUP BY event.player_name
+            HAVING count(shot.first_time) > 0
+            ORDER BY firsts DESC;"""
 
     #==========================================================================
 
@@ -249,7 +268,13 @@ def Q_4(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT team_name, type_name
+                FROM event
+                WHERE type_name = 'pass' AND competition_name = 'la liga' and season_name = '2020/2021' 
+                
+                GROUP BY player_name, type_name
+                HAVING COUNT(type_name) > 1
+                ORDER BY player_name DESC;"""
 
     #==========================================================================
 
@@ -271,7 +296,13 @@ def Q_5(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """SELECT event.player_name, count(pass.recipient) AS recivers
+                FROM event
+                INNER JOIN pass ON event.event_id = pass.event_id
+                WHERE competition_name = 'Premier League' and season_name = '2003/2004' 
+                GROUP BY event.player_name
+                HAVING count(pass.recipient) > 0
+                ORDER BY recivers DESC;"""
 
     #==========================================================================
 
@@ -293,7 +324,11 @@ def Q_6(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT team_name, type_name
+                FROM event
+                WHERE type_name = 'shot' AND competition_name = 'Premier League' and season_name = '2003/2004' 
+                HAVING COUNT(type_name) > 1
+                ORDER BY team_name DESC; """
 
     #==========================================================================
 
@@ -316,7 +351,14 @@ def Q_7(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT event.player_name, COUNT(pass.type_name) AS val
+                FROM event
+                INNER JOIN pass ON event.event_id = pass.event_id
+                WHERE pass.type_name = 'through ball' AND competition_name = 'la liga' and season_name = '2020/2021' 
+                GROUP BY event.player_name
+                HAVING val > 0
+                ORDER BY val DESC;
+                """
 
     #==========================================================================
 
@@ -338,7 +380,13 @@ def Q_8(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT event.team_name, COUNT(pass.type_name) AS val
+                FROM event
+                INNER JOIN pass ON event.event_id = pass.event_id
+                WHERE pass.type_name = 'through ball' AND competition_name = 'la liga' and season_name = '2020/2021' 
+                GROUP BY event.team_name
+                HAVING val > 0
+                ORDER BY val DESC; """
 
     #==========================================================================
 
@@ -360,7 +408,13 @@ def Q_9(conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """ """
+    query = """ SELECT event.player_name, COUNT(dribble.outcome_name) AS val
+                FROM event
+                INNER JOIN dribble ON event.event_id = dribble.event_id
+                WHERE dribble.outcome_name = 'Sucesss' AND competition_name = 'la liga' and ( season_name = '2020/2021' OR season_name = '2019/2020' OR season_name = '2018/2019')  
+                GROUP BY event.player_name
+                HAVING val > 0
+                ORDER BY val DESC; """
 
     #==========================================================================
 
